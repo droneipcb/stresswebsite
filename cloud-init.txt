@@ -1,0 +1,17 @@
+#cloud-config
+package_upgrade: true
+packages:
+  - apache2
+  - php
+  - libapache2-mod-php
+  - mysql-server
+  - php-mysql
+  - git
+runcmd:
+  - cd ~
+  - git clone https://github.com/droneipcb/stresswebsite.git
+  - cd stresswebsite
+  - sudo mysql < mysqlsampledatabase.sql
+  - sudo rm /var/www/html/index.html
+  - sudo cp index.php /var/www/html
+  - systemctl restart apache2
